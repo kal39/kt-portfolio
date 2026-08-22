@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import { Inter, JetBrains_Mono } from 'next/font/google';
+import ThemeToggle from './components/theme-toggle';
 import './globals.css';
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-sans' });
@@ -16,7 +17,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className="scroll-smooth">
+    /* 
+      CRITICAL FIX: Added 'dark' class permanently to the html tag 
+      to ensure your custom dark/gold styling compiles on mobile.
+    */
+    <html lang="en" className="scroll-smooth dark">
       <body className={`${inter.className} ${mono.variable} min-h-screen relative overflow-x-hidden transition-colors duration-300 font-mono bg-[#080809] text-[#f3f4f6] bg-[radial-gradient(#1c1c1f_1.5px,transparent_1.5px)] bg-[size:24px_24px]`}
       >
         
@@ -26,22 +31,37 @@ export default function RootLayout({
           <div className="absolute top-[15%] right-[-5%] w-[45%] h-[500px] rounded-full bg-indigo-300/10 dark:from-[#C5A029]/5 dark:to-transparent blur-[120px]" />
         </div>
 
-        {/* Full-Screen Navigation Header - Immersive, Clean, and Minimal */}
+        {/* Full-Screen Navigation Header */}
         <header className="sticky top-0 bg-[#D4AF37]/20 backdrop-blur-md border-b border-[#D4AF37]/50 z-50 transition-colors shadow-[0_4px_30px_rgba(212,175,55,0.05)]">
           <div className="w-full px-6 sm:px-12 md:px-16 lg:px-24 xl:px-32 py-4 flex justify-between items-center">
             
-            {/* Logo - Metallic Gold */}
+            {/* Logo */}
             <div className="flex items-center gap-4">
               <span className="p-2 border border-stone-200 dark:border-stone-900 rounded font-bold text-[#D4AF37]">
                 KT_Portfolio
               </span>
             </div>
             
-            {/* Navigation Categories (CV Button Removed) */}
-            <div className="flex gap-6 text-xs font-bold uppercase tracking-widest text-stone-400">
-              <a href="#about" className="hover:text-[#D4AF37] transition-colors">About</a>
-              <a href="#skills" className="hover:text-[#D4AF37] transition-colors">Skills</a>
-              <a href="#projects" className="hover:text-[#D4AF37] transition-colors">Projects</a>
+            {/* Navigation Categories & CV Download */}
+            <div className="flex items-center gap-8">
+              <div className="hidden md:flex gap-6 text-xs font-bold uppercase tracking-widest text-stone-450">
+                <a href="#about" className="hover:text-[#D4AF37] transition-colors">About</a>
+                <a href="#skills" className="hover:text-[#D4AF37] transition-colors">Skills</a>
+                <a href="#projects" className="hover:text-[#D4AF37] transition-colors">Projects</a>
+              </div>
+              
+              <div className="flex items-center gap-4">
+                <ThemeToggle />
+                
+                {/* Download CV Button */}
+                <a 
+                  href="/Kalkidan_Tasew_CV.pdf" 
+                  download="Kalkidan_Tasew_CV.pdf"
+                  className="px-4 py-2 border border-stone-200 dark:border-stone-900 rounded text-xs font-bold text-white hover:border-[#D4AF37] hover:text-[#D4AF37] transition-all duration-300"
+                >
+                  DOWNLOAD_CV ⤓
+                </a>
+              </div>
             </div>
 
           </div>
@@ -55,7 +75,7 @@ export default function RootLayout({
             
             {/* Column 1: Identity and Location */}
             <div className="md:col-span-4 space-y-3">
-              <span className="font-extrabold text-sm text-[#D4AF37]">
+              <span className="font-extrabold text-sm text-[#C5A029] dark:text-[#D4AF37]">
                 KT_Portfolio
               </span>
               <p className="text-xs text-stone-500 max-w-xs leading-relaxed">
